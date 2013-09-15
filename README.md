@@ -23,6 +23,7 @@ Installation
 Usage
 -------------
 
+```js
     var imager = require('cloud-imager');
     var p = imager.processors;
     
@@ -34,17 +35,21 @@ Usage
     imager.process('./test.jpg', function(err, res) {
       ...
     });
+```
 
 This will return something like this:
 
+```js
     {
         square:     '8IP9bwH1alVdaocK_square.jpg',
         sepia:      '8IP9bwH1alVdaocK_sepia.jpg',
         original:   '8IP9bwH1alVdaocK.jpg'
     }
+```
 
 ###With express.js
 
+```js
     app.post('/upload', function(req, res) {
       if(req.files.image) {
         imager.process(req.files.image, function(err, res) {
@@ -52,9 +57,11 @@ This will return something like this:
         });
       }
     });
+```
 
 ###With multiple presets
 
+```js
     imager.preset('article', {
       thumbnail: p.smartCrop(50, 50),
       wide:      p.resize(500)
@@ -71,7 +78,7 @@ This will return something like this:
     imager.process('./test.jpg', 'instagram', function(err, res) {
       ...
     });
-
+```
 
 Processors
 ----------
@@ -122,6 +129,7 @@ Keep in mind that <code>{{name}}</code>, <code>{{extension}}</code> and <code>{{
 <a id="filenameformatter"></a>
 ####Define Custom Formatter
 
+```js
     var userImageFormatter = function(username) {
         return function(format, context) {
             return 'public/users/' + username + context.mimeExtension;
@@ -136,16 +144,19 @@ Keep in mind that <code>{{name}}</code>, <code>{{extension}}</code> and <code>{{
         });
       }
     });
-
+```
 
 ###Local Storage
 
 Good for development environments. This is default and uploads to <code>public/uploads</code>. To change this you can either define a new outlet or configure the existing:
 
+```js
     imager.uploadDirectory = './uploads'; //Relative to your package root
+```
 
 or define new outlet:
 
+```js
     imager.defaultOutlet = imager.localDirectoryOutlet({
         uploadDirectory: __dirname +'/public/uploads'
         
@@ -155,11 +166,15 @@ or define new outlet:
         //Can be absolute, url och relative. Url is like relative but prefixed with /
         returnType: 'url' 
     });
+```
 
 or pass the directory as a parameter:
+
+```js
     imager.process('./test.jpg', 'default' 'publicAssets/uploads', function(err, res) {
       ...
     });
+```
 
 Cloud Storage
 -------------
@@ -169,6 +184,7 @@ Currently suppports Amazon, Rackspace and Azure.
 
 ###Example AWS S3 setup
  
+```js
     var pkgcloud = require('pkgcloud');
     var storageClient = pkgcloud.storage.createClient({
       provider: 'amazon',
@@ -177,12 +193,14 @@ Currently suppports Amazon, Rackspace and Azure.
     });
 
     imager.defaultOutlet = imager.pkgcloudOutlet(storageClient, process.env.AWS_S3_BUCKET);
+```
 
 Custom Storage/Output
 ---------------------
 
 The following outlet will make filenames web safe and return file path and size of generated images.
 
+```js
     var slugify = require('slugify');
     
     function slugifyOutlet(file, context, cb) {
@@ -198,6 +216,7 @@ The following outlet will make filenames web safe and return file path and size 
       });
     };
     imager.defaultOutlet = slugifyOutlet;
+```
 
 Todo
 ----
