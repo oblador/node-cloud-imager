@@ -94,17 +94,16 @@ Configuration
 
 ###Global Options
 
-| Option Name           | Description                                           | Default                                    
-| --------------------: |-------------------------------------------------------| -------------------------------------------
-| imageManipulator      | [gm](http://aheckmann.github.io/gm/) subclass.        | ImageMagick
-| defaultOutlet         | Default outlet if not defined in process() options.   | *CloudImager.localDirectoryOutlet*
-| uploadDirectory       | Destination folder of processed files.                | './'
-| fileNameFormat        | See [File Name Format](#filenameformat).              | '{{uid}}{{prefixedVariant}}{{mimeExtension}}'
-| fileNameFormatter     | See [Define Custom Formatter](#filenameformatter).    | *CloudImager.defaultFileNameFormatter*
+| Option Name           | Description                                               | Default                                    
+| --------------------: |-----------------------------------------------------------| -------------------------------------------
+| imageManipulator      | [gm](http://aheckmann.github.io/gm/) subclass.            | ImageMagick
+| defaultOutlet         | Default outlet if not defined in process() options.       | *CloudImager.localDirectoryOutlet*
+| uploadDirectory       | Destination folder of processed files.                    | './'
+| fileNameFormat        | See [File Name Format](#file-name-format).                | '{{uid}}{{prefixedVariant}}{{mimeExtension}}'
+| fileNameFormatter     | See [Define Custom Formatter](#define-custom-formatter).  | *CloudImager.defaultFileNameFormatter*
 
 ###File Name Formatting
 
-<a id="filenameformat"></a>
 ####File Name Format
 
 Can be globally defined in <code>imager.fileNameFormat</code> or passed in your outlet options object.
@@ -126,14 +125,13 @@ Available variables:
 
 Keep in mind that <code>{{name}}</code>, <code>{{extension}}</code> and <code>{{basename}}</code> are not to be trusted if coming from user uploads. Make sure to validate beforehand or **use <code>{{uid}}</code> and <code>{{mimeExtension}}</code>**.
 
-<a id="filenameformatter"></a>
 ####Define Custom Formatter
 
 ```js
 var userImageFormatter = function(username) {
-    return function(format, context) {
-        return 'public/users/' + username + context.mimeExtension;
-    };
+  return function(format, context) {
+    return 'public/users/' + username + context.mimeExtension;
+  };
 };
 
 app.post('/profile/image', function(req, res) {
@@ -158,13 +156,13 @@ or define new outlet:
 
 ```js
 imager.defaultOutlet = imager.localDirectoryOutlet({
-    uploadDirectory: __dirname +'/public/uploads'
-    
-    //If return type is url or relative, they will be relative to cwd
-    cwd: __dirname +'/public',
-    
-    //Can be absolute, url och relative. Url is like relative but prefixed with /
-    returnType: 'url' 
+  uploadDirectory: __dirname +'/public/uploads'
+
+  //If return type is url or relative, they will be relative to cwd
+  cwd: __dirname +'/public',
+
+  //Can be absolute, url och relative. Url is like relative but prefixed with /
+  returnType: 'url' 
 });
 ```
 
