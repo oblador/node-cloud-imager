@@ -24,60 +24,60 @@ Usage
 -------------
 
 ```js
-    var imager = require('cloud-imager');
-    var p = imager.processors;
-    
-    imager.preset({
-      square: p.smartCrop(100, 100),
-      sepia:  [p.resize(200, 200), p.sepia]
-    }
-    
-    imager.process('./test.jpg', function(err, res) {
-      ...
-    });
+var imager = require('cloud-imager');
+var p = imager.processors;
+
+imager.preset({
+  square: p.smartCrop(100, 100),
+  sepia:  [p.resize(200, 200), p.sepia]
+}
+
+imager.process('./test.jpg', function(err, res) {
+  ...
+});
 ```
 
 This will return something like this:
 
 ```js
-    {
-        square:     '8IP9bwH1alVdaocK_square.jpg',
-        sepia:      '8IP9bwH1alVdaocK_sepia.jpg',
-        original:   '8IP9bwH1alVdaocK.jpg'
-    }
+{
+ square:     '8IP9bwH1alVdaocK_square.jpg',
+ sepia:      '8IP9bwH1alVdaocK_sepia.jpg',
+ original:   '8IP9bwH1alVdaocK.jpg'
+}
 ```
 
 ###With express.js
 
 ```js
-    app.post('/upload', function(req, res) {
-      if(req.files.image) {
-        imager.process(req.files.image, function(err, res) {
-          ...
-        });
-      }
+app.post('/upload', function(req, res) {
+  if(req.files.image) {
+    imager.process(req.files.image, function(err, res) {
+      ...
     });
+  }
+});
 ```
 
 ###With multiple presets
 
 ```js
-    imager.preset('article', {
-      thumbnail: p.smartCrop(50, 50),
-      wide:      p.resize(500)
-    });
+imager.preset('article', {
+  thumbnail: p.smartCrop(50, 50),
+  wide:      p.resize(500)
+});
 
-    imager.preset('instagram', {
-      thumbnail: p.smartCrop(50, 50),
-      large:     p.smartCrop(512, 512),
-    }, { 
-      keepOriginal:   false,
-      fileNameFormat: '{{uid}}/{{variant}}{{mimeExtension}}'
-    });
+imager.preset('instagram', {
+  thumbnail: p.smartCrop(50, 50),
+  large:     p.smartCrop(512, 512),
+}, { 
+  keepOriginal:   false,
+  fileNameFormat: '{{uid}}/{{variant}}{{mimeExtension}}'
+});
 
-    imager.process('./test.jpg', 'instagram', function(err, res) {
-      ...
-    });
+imager.process('./test.jpg', 'instagram', function(err, res) {
+  ...
+});
 ```
 
 Processors
@@ -130,20 +130,20 @@ Keep in mind that <code>{{name}}</code>, <code>{{extension}}</code> and <code>{{
 ####Define Custom Formatter
 
 ```js
-    var userImageFormatter = function(username) {
-        return function(format, context) {
-            return 'public/users/' + username + context.mimeExtension;
-        };
+var userImageFormatter = function(username) {
+    return function(format, context) {
+        return 'public/users/' + username + context.mimeExtension;
     };
+};
 
-    app.post('/profile/image', function(req, res) {
-      imager.fileNameFormatter = userImageFormatter(req.user.username);
-      if(req.files.image) {
-        imager.process(req.files.image, function(err, res) {
-          ...
-        });
-      }
+app.post('/profile/image', function(req, res) {
+  imager.fileNameFormatter = userImageFormatter(req.user.username);
+  if(req.files.image) {
+    imager.process(req.files.image, function(err, res) {
+      ...
     });
+  }
+});
 ```
 
 ###Local Storage
@@ -151,29 +151,29 @@ Keep in mind that <code>{{name}}</code>, <code>{{extension}}</code> and <code>{{
 Good for development environments. This is default and uploads to <code>public/uploads</code>. To change this you can either define a new outlet or configure the existing:
 
 ```js
-    imager.uploadDirectory = './uploads'; //Relative to your package root
+imager.uploadDirectory = './uploads'; //Relative to your package root
 ```
 
 or define new outlet:
 
 ```js
-    imager.defaultOutlet = imager.localDirectoryOutlet({
-        uploadDirectory: __dirname +'/public/uploads'
-        
-        //If return type is url or relative, they will be relative to cwd
-        cwd: __dirname +'/public',
-        
-        //Can be absolute, url och relative. Url is like relative but prefixed with /
-        returnType: 'url' 
-    });
+imager.defaultOutlet = imager.localDirectoryOutlet({
+    uploadDirectory: __dirname +'/public/uploads'
+    
+    //If return type is url or relative, they will be relative to cwd
+    cwd: __dirname +'/public',
+    
+    //Can be absolute, url och relative. Url is like relative but prefixed with /
+    returnType: 'url' 
+});
 ```
 
 or pass the directory as a parameter:
 
 ```js
-    imager.process('./test.jpg', 'default' 'publicAssets/uploads', function(err, res) {
-      ...
-    });
+imager.process('./test.jpg', 'default' 'publicAssets/uploads', function(err, res) {
+  ...
+});
 ```
 
 Cloud Storage
@@ -185,14 +185,14 @@ Currently suppports Amazon, Rackspace and Azure.
 ###Example AWS S3 setup
  
 ```js
-    var pkgcloud = require('pkgcloud');
-    var storageClient = pkgcloud.storage.createClient({
-      provider: 'amazon',
-      accessKey: process.env.AWS_S3_SECRET,
-      accessKeyId: process.env.AWS_S3_KEY, 
-    });
+var pkgcloud = require('pkgcloud');
+var storageClient = pkgcloud.storage.createClient({
+  provider: 'amazon',
+  accessKey: process.env.AWS_S3_SECRET,
+  accessKeyId: process.env.AWS_S3_KEY, 
+});
 
-    imager.defaultOutlet = imager.pkgcloudOutlet(storageClient, process.env.AWS_S3_BUCKET);
+imager.defaultOutlet = imager.pkgcloudOutlet(storageClient, process.env.AWS_S3_BUCKET);
 ```
 
 Custom Storage/Output
@@ -201,21 +201,21 @@ Custom Storage/Output
 The following outlet will make filenames web safe and return file path and size of generated images.
 
 ```js
-    var slugify = require('slugify');
-    
-    function slugifyOutlet(file, context, cb) {
-      context.slug = slugify(context.name);
-      var destination = imager.formatFileName('{{slug}}{{mimeExtension}}', context);
-      
-      //Save file to disc first to be able to read altered sizes
-      file.write(destination, function(err) {
-        if(err) return cb(err);
-        imager.imageManipulator(destination).size(function(err, size) {
-          cb(err, { file: destination, size: size});
-        });
-      });
-    };
-    imager.defaultOutlet = slugifyOutlet;
+var slugify = require('slugify');
+
+function slugifyOutlet(file, context, cb) {
+  context.slug = slugify(context.name);
+  var destination = imager.formatFileName('{{slug}}{{mimeExtension}}', context);
+  
+  //Save file to disc first to be able to read altered sizes
+  file.write(destination, function(err) {
+    if(err) return cb(err);
+    imager.imageManipulator(destination).size(function(err, size) {
+      cb(err, { file: destination, size: size});
+    });
+  });
+};
+imager.defaultOutlet = slugifyOutlet;
 ```
 
 Todo
