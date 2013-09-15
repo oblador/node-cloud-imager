@@ -203,8 +203,10 @@ Todo
 ----
 
 * Unit tests
-* Inline commenting
+* Better code commenting
 * Instagram like processors
+* Support stream input
+* (Deleting files based on url)
 
 #### Author: [Joel Arvidsson](http://joelarvidsson.se) of [Durated](http://durated.com)
 #### License: MIT
