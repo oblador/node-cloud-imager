@@ -110,16 +110,16 @@ Can be globally defined in <code>imager.fileNameFormat</code> or passed in your 
 
 Available variables:
 
-| Variable              | Description                                       | Example                                       |
-| --------------------: |---------------------------------------------------| ----------------------------------------------|
-| {{preset}}            | Name of the current preset.                       | <code>default</code> or <code>article</code>  |
-| {{variant}}           | Name of the image manipulation variant.           | <code>thumbnail</code> or <code>wide</code>   |
-| {{prefixedVariant}}   | Same as variant but prefixed with underscore.     | <code>\_thumbnail</code> or *empty string*    |
-| {{name}}              | Original file name.                               | <code>CATS & Unicorns.jPEg</code>             |
-| {{extension}}         | Original file extension.                          | <code>.jPEg</code>                            |
-| {{basename}}          | Original file name without extension.             | <code>CATS & Unicorns</code>                  |
-| {{mimeExtension}}     | Associated extension to detected mime type.       | <code>.jpg</code>                             |
-| {{uid}}               | Randomized 16 letter name.                        | <code>NcNen1efymj0KkCl</code>                 |
+| Variable              | Description                                       | Example                                           |
+| --------------------: |---------------------------------------------------| --------------------------------------------------|
+| {{preset}}            | Name of the current preset.                       | <code>default</code> or <code>article</code>      |
+| {{variant}}           | Name of the image manipulation variant.           | <code>thumbnail</code> or <code>original</code>   |
+| {{prefixedVariant}}   | Same as variant but prefixed with underscore.     | <code>\_thumbnail</code> or *empty string*        |
+| {{name}}              | Original file name.                               | <code>CATS & Unicorns.jPEg</code>                 |
+| {{extension}}         | Original file extension.                          | <code>.jPEg</code>                                |
+| {{basename}}          | Original file name without extension.             | <code>CATS & Unicorns</code>                      |
+| {{mimeExtension}}     | Associated extension to detected mime type.       | <code>.jpg</code>                                 |
+| {{uid}}               | Randomized 16 letter name.                        | <code>NcNen1efymj0KkCl</code>                     |
 
 ####Note!
 
