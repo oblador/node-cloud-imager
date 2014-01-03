@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "description": "Powerful yet simple way to apply filters/crop/resize images and upload to cloud providers (Amazon S3, Rackspace, Azure).",
   "main": "lib/cloud-imager/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://git@github.com:oblador/node-cloud-imager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oblador/node-cloud-imager/issues"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
